@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Food Menu</title>
+</head>
+<body>
+
+<h2>🍔 Menu</h2>
+
+<button onclick="addToCart('Pizza',100)">Pizza ₹100</button>
+<button onclick="addToCart('Burger',80)">Burger ₹80</button>
+<button onclick="addToCart('Pasta',120)">Pasta ₹120</button>
+
+<h3>Cart:</h3>
+<ul id="cartList">Cart is empty</ul>
+
+<h3>Total: ₹<span id="totalPrice">0</span></h3>
+
+<button onclick="placeOrder()">Place Order</button>
+<button onclick="clearCart()">Clear Cart</button>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+  cart.push([item, price]);
+  total += price;
+
+  let list = document.getElementById("cartList");
+  let li = document.createElement("li");
+  li.innerText = item + " - ₹" + price;
+  list.appendChild(li);
+
+  document.getElementById("totalPrice").innerText = total;
+
+  // SAVE DATA
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+  localStorage.setItem("totalAmount", total);
+}
+
+function placeOrder() {
+  if (total === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+  localStorage.setItem("totalAmount", total);
+
+  window.location.href = "success.html";
+}
+
+function clearCart() {
+  cart = [];
+  total = 0;
+
+  document.getElementById("cartList").innerHTML = "Cart is empty";
+  document.getElementById("totalPrice").innerText = "0";
+
+  localStorage.clear();
+}
+</script>
+
+</body>
+</html>

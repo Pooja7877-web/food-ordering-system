@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Receipt</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f5f5f5;
+    }
+
+    .box {
+      background: light pink;
+      width: 600px;
+      margin: 100px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
+
+    button {
+      margin: 10px;
+      padding: 8px 15px;
+      border: none;
+      background: red;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h2>🧾 Order Receipt🧾</h2>
+
+  <p><b>Order ID:</b> <span id="orderId"></span></p>
+  <p><b>Date:</b> <span id="date"></span></p>
+
+  <hr>
+
+  <h3>Items:</h3>
+  <ul id="itemsList"></ul>
+
+  <h3>Total: ₹<span id="total"></span></h3>
+
+
+
+
+
+
+
+
+
+
+
+<p><b>Status:</b> <span id="status"></span></p>
+
+
+
+
+
+  <hr>
+
+  <h3>Customer Details</h3>
+  <p id="custName"></p>
+  <p id="custAddress"></p>
+  <p id="custPhone"></p>
+
+  <button onclick="goBack()">Back</button>
+  <button onclick="window.print()">Print</button>
+
+</div>
+
+<script>
+
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+// 👉 last order
+let order = orders[orders.length - 1];
+
+if(order){
+
+  document.getElementById("orderId").innerText = Math.floor(Math.random()*100000);
+  document.getElementById("date").innerText = order.date;
+
+  // ✅ ITEMS FIX
+  let list = document.getElementById("itemsList");
+
+  order.items.forEach(item => {
+    let li = document.createElement("li");
+    li.innerText = item.item + " - ₹" + item.price;
+    list.appendChild(li);
+  });
+
+  document.getElementById("total").innerText = order.total;
+
+
+
+
+// 🔥 STATUS CHANGE LOGIC
+function updateStatus(){
+
+  let now = Date.now();
+  let diff = (now - order.time) / 1000;
+
+  let status = "Order Placed";
+
+  if(diff > 5){
+    status = "Preparing";
+  }
+  if(diff > 10){
+    status = "Out for Delivery";
+  }
+  if(diff > 15){
+    status = "Delivered";
+  }
+
+  let el = document.getElementById("status");
+  el.innerText = status;
+
+// 🎨 COLOR
+  if(status === "Delivered"){
+    el.style.color = "green";
+  }
+  else if(status === "Preparing"){
+    el.style.color = "orange";
+  }
+  else if(status === "Out for Delivery"){
+    el.style.color = "blue";
+  }
+}
+
+// 👉 FIRST CALL
+updateStatus();
+
+// 👉 AUTO UPDATE
+setInterval(updateStatus, 3000);
+
+
+document.getElementById("status").innerText = order.status;
+
+  // ✅ CUSTOMER FIX
+  document.getElementById("custName").innerText = "Name: " + order.customer.name;
+  document.getElementById("custAddress").innerText = "Address: " + order.customer.address;
+  document.getElementById("custPhone").innerText = "Phone: " + order.customer.phone;
+}
+
+function goBack(){
+  window.location.href = "menu.html";
+}
+
+</script>
+
+</body>
+</html>

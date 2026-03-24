@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+
+    <style>
+        body {
+   
+  font-family: Arial;
+  background: #fff;
+  text-align: center;
+
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #e23744;
+  color: white;
+}
+
+.navbar input {
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  width: 200px;
+
+}
+      
+/* Menu Cards */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  width: 200px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+#cartList {
+  list-style: none;
+  padding: 0;
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Button */
+button {
+  background: #e23744;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+
+/* Cart */
+#cartList {
+  list-style: none;
+  padding: 0;
+
+  background: #fff;
+  padding: 15px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h3 {
+  color: #e23744;
+}
+</style>
+
+
+</head>
+<body>
+
+<div class="navbar">
+<img src="logo.png" width="250">
+<h2>😋Foodie😋</h2>
+
+
+<div style="display:flex; align-items:center; gap:40px;">
+  
+</div>
+
+
+  
+ 
+  <span id="welcomeUser"></span>
+<button onclick="logout()">Logout</button>
+<button onclick="window.location.href='history.html'">Order History</button>
+</div>
+
+
+<h1>🍔 Food Menu🍔</h1>
+<input type="text" id="searchBox" placeholder="Search food..." onkeyup="searchFood()">
+
+<div class="menu">
+
+    <div class="card">
+       <img src="pizza.jpg" width="150">
+        <h3> Pizza</h3>
+        <p>₹200</p>
+        <button onclick="addToCart('Pizza',200)">Add to cart</button>
+     
+<p>Rate:</p>
+    <select onchange="saveRating('Pizza', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Pizza"></p>
+    </div>
+
+    <div class="card">
+       <img src="burger.jpg" width="150">
+        <h3> BURGER</h3>
+        <p>₹100</p>
+        <button onclick="addToCart('Burger',100)">Add to cart</button>
+
+       <p>Rate:</p>
+    <select onchange="saveRating('Burger', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Burger"></p>
+    </div>
+
+    <div class="card">
+        <img src="fries.jpg" width="120">
+        <h3>FRIES</h3>
+        <p>₹80</p>
+        <button onclick="addToCart('Fries',80)">Add to cart</button>
+
+   <p>Rate:</p>
+    <select onchange="saveRating('fries', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Fries"></p>
+    </div>
+
+<div class="card">
+         <img src="hakka-noodles.jpg" width="150">
+        <h3>  HAKKA NOODLES</h3>
+        <p>₹160</p>
+        <button onclick="addToCart('hakka Noodles',160)">Add to cart</button>
+
+
+        <p>Rate:</p>
+    <select onchange="saveRating('Hakka Noodles', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-hakka noodles"></p>
+    </div>
+
+<div class="card">
+       <img src="bowl ice-cream.jpg" width="150">
+        <h3> BOWL ICE-CREAM</h3>
+        <p>₹125</p>
+        <button onclick="addToCart('Bowl icecream',125)">Add to cart</button>
+
+
+ <p>Rate:</p>
+    <select onchange="saveRating('Bowl ice-cream', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Bowl ice-cream"></p>
+    </div>
+
+<div class="card">
+       <img src="chessesandwich.jpg" width="240">
+        <h3> CHEESE SANDWICH</h3>
+        <p>₹70</p>
+        <button onclick="addToCart('sandwich',70)">Add to cart</button>
+
+     <p>Rate:</p>
+    <select onchange="saveRating('Sandwich', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Sandwich"></p>
+    </div>
+
+<div class="card">
+        <img src="cold drink.jpg" width="290">
+        <h3> COLD DRINK</h3>
+        <p>₹30</p>
+        <button onclick="addToCart('Cold drinks',30)">Add to cart</button>
+
+
+    <p>Rate:</p>
+    <select onchange="saveRating('Cold drinks', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-cold drinks"></p>
+    </div>
+
+<div class="card">
+    <img src="soup.jpg" width="130">
+        <h3>SOUP</h3>
+        <p>₹220</p>
+        <button onclick="addToCart('Soup',220)">Add to cart</button>
+
+
+
+     <p>Rate:</p>
+    <select onchange="saveRating('soup', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-soup"></p>
+    </div>
+
+
+<div class="card">
+        <img src="cold coffee.jpg" width="70">
+        <h3> COLD COFFEE</h3>
+        <p>₹35</p>
+        <button onclick="addToCart('cold Coffee',35)">Add to cart</button>
+
+
+   <p>Rate:</p>
+    <select onchange="saveRating('cold-coffee', this.value)">
+      <option value="">⭐ Rate</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+
+     <p id="rating-Cold-coffee"></p>
+    </div>
+</div>
+<h2>🛒 Cart Items</h2>
+<ul id="cartList"></ul>
+<h3>Total:₹<span id="totalPrice">0</span></h3>
+
+
+
+
+
+
+<h3>Customer Details</h3>
+
+<input type="text" id="custName" placeholder="Enter Name"><br><br>
+<input type="text" id="custAddress" placeholder="Enter Address"><br><br>
+<input type="text" id="custPhone" placeholder="Enter Phone"><br><br>
+
+
+
+
+<h3>💳 Select Payment Method</h3>
+
+<select id="paymentMode">
+  <option value="">-- Choose Payment --</option>
+  <option value="Cash on Delivery">💵 Cash on Delivery</option>
+  <option value="UPI">📱 UPI</option>
+  <option value="Card">💳 Debit/Credit Card</option>
+</select>
+
+
+<br><br>
+
+
+<button onclick="placeOrder()">Place Order</button>
+
+<button onclick="clearCart()">Clear Cart</button>
+
+
+
+<!-- UPI POPUP -->
+<div id="upiPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+
+  <div style="background:white; width:300px; margin:100px auto; padding:20px; border-radius:10px; text-align:center;">
+    
+    <h3>📱 Scan & Pay</h3>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=test@upi&pn=Foodie&am=100" width="200">
+
+    <p>UPI ID: foodie@upi</p>
+     <br><br>
+
+    <button onclick="confirmUPI()">✅ Payment Done</button>
+    <br><br>
+    <button onclick="closeUPI()">❌ Cancel</button>
+
+
+
+<a href="admin.html">📊 Admin Panel</a>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+  cart.push({item: item, price: price});  // ✅ FIX
+
+  total += price;
+
+  alert(item + " added to cart!");
+
+  
+  let li = document.createElement("li");
+  li.innerHTML = item + " - ₹" + price +
+    " <button onclick='removeItem(this," + price + ")'>❌</button>";
+
+    document.getElementById("cartList").appendChild(li);
+    document.getElementById("totalPrice").innerText = "₹" + total;
+}
+
+  
+function removeItem(btn, price) {
+  btn.parentElement.remove();
+  total -= price;
+
+  document.getElementById("totalPrice").innerText = total;
+
+  if(document.getElementById("cartList").children.length === 0){
+    document.getElementById("cartList").innerHTML = "Cart is empty";
+  }
+}
+
+
+function placeOrder() {
+
+  if (total === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  let name = document.getElementById("custName").value;
+  let address = document.getElementById("custAddress").value;
+  let phone = document.getElementById("custPhone").value;
+
+  if (!name || !address || !phone) {
+    alert("Please fill all customer details!");
+    return;
+  }
+
+
+  let payment = document.getElementById("paymentMode").value;
+
+  if(payment === "UPI"){
+    openUPI();
+  } else {
+    saveOrder(payment);
+  }
+}
+
+function saveOrder(paymentMethod){
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let newOrder = {
+    items: cart,
+    total: total,
+    payment: paymentMethod,
+    status:"Order placed",
+    time:Date.now(),
+    customer: {
+      name: custName.value,
+      address: custAddress.value,
+      phone: custPhone.value
+    },
+    date: new Date().toLocaleString()
+};
+orders.push(newOrder);
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  window.location.href = "success.html";
+}
+
+function openUPI(){
+  document.getElementById("upiPopup").style.display = "block";
+}
+
+function closeUPI(){
+  document.getElementById("upiPopup").style.display = "none";
+}
+function confirmUPI(){
+  alert("Payment Successful!");
+  saveOrder("UPI");
+}
+
+
+
+
+// 🔥 ORDER TRACKING FUNCTION
+function updateStatus(){
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  orders.forEach(order => {
+
+    if(order.status === "Order Placed"){
+      order.status = "Preparing";
+    }
+    else if(order.status === "Preparing"){
+      order.status = "Out for Delivery";
+    }
+    else if(order.status === "Out for Delivery"){
+      order.status = "Delivered";
+    }
+
+  });
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+}
+
+
+// 🔥 AUTO UPDATE (हर 5 sec)
+setInterval(updateStatus, 5000);
+
+
+
+
+
+
+
+function clearCart(){
+  cart = [];
+  total = 0;
+
+  document.getElementById("cartList").innerHTML = "Cart is empty";
+  document.getElementById("totalPrice").innerText = 0;
+}
+
+
+
+
+
+function searchFood() {
+
+  let input = document.getElementById("searchBox").value.toLowerCase();
+
+  let items = document.querySelectorAll(".card");
+
+  items.forEach(item => {
+
+    let text = item.innerText.toLowerCase();
+
+    if (text.includes(input)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+
+  });
+}
+
+
+
+
+
+
+// ⭐ SAVE RATING
+function saveRating(item, rating){
+
+  let ratings = JSON.parse(localStorage.getItem("ratings")) || {};
+
+  ratings[item] = rating;
+
+  localStorage.setItem("ratings", JSON.stringify(ratings));
+
+  document.getElementById("rating-" + item).innerText =
+  "Your Rating: " + rating + " ⭐";
+}
+
+// ⭐ LOAD RATING
+window.onload = function(){
+
+  let ratings = JSON.parse(localStorage.getItem("ratings")) || {};
+
+  for(let item in ratings){
+    document.getElementById("rating-" + item).innerText =
+    "Your Rating: " + ratings[item] + " ⭐";
+  }
+
+}
+
+
+
+
+
+function logout(){
+  localStorage.removeItem("user");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

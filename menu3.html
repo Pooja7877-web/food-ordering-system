@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cart</title>
+</head>
+
+<body>
+
+<h2>🛒 Cart Items</h2>
+<ul id="cartList"></ul>
+<h3>Total: ₹<span id="totalPrice">0</span></h3>
+
+<h3>Customer Details</h3>
+<input type="text" id="custName" placeholder="Enter Name"><br><br>
+<input type="text" id="custAddress" placeholder="Enter Address"><br><br>
+<input type="text" id="custPhone" placeholder="Enter Phone"><br><br>
+
+<h3>💳 Select Payment Method</h3>
+<select id="paymentMode">
+  <option value="">-- Choose Payment --</option>
+  <option value="Cash on Delivery">Cash on Delivery</option>
+  <option value="UPI">UPI</option>
+</select>
+
+<br><br>
+
+<button onclick="placeOrder()">Place Order</button>
+<button onclick="clearCart()">Clear Cart</button>
+
+<!-- ✅ SINGLE UPI POPUP -->
+<div id="upiPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+  <div style="background:white; width:300px; margin:100px auto; padding:20px; text-align:center;">
+    
+    <h3>Scan & Pay</h3>
+
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=test@upi" width="200">
+
+    <br><br>
+
+    <button onclick="confirmUPI()">Payment Done</button>
+    <br><br>
+    <button onclick="closeUPI()">Cancel</button>
+
+  </div>
+</div>
+
+<script>
+
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+  cart.push({item, price});
+  total += price;
+
+  alert(item + " added!");
+
+  let li = document.createElement("li");
+  li.innerHTML = item + " - ₹" + price +
+    " <button onclick='removeItem(this," + price + ")'>❌</button>";
+
+  document.getElementById("cartList").appendChild(li);
+  document.getElementById("totalPrice").innerText = total;
+}
+
+function removeItem(btn, price) {
+  btn.parentElement.remove();
+  total -= price;
+
+  document.getElementById("totalPrice").innerText = total;
+
+  if(document.getElementById("cartList").children.length === 0){
+    document.getElementById("cartList").innerHTML = "Cart is empty";
+  }
+}
+
+function placeOrder() {
+
+  if(total === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let name = custName.value;
+  let address = custAddress.value;
+  let phone = custPhone.value;
+
+  if(!name || !address || !phone){
+    alert("Fill all details!");
+    return;
+  }
+
+  let payment = document.getElementById("paymentMode").value;
+
+  if(payment === "UPI"){
+    openUPI();
+  } else {
+    saveOrder(payment);
+  }
+}
+
+function saveOrder(paymentMethod){
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let newOrder = {
+    items: cart,
+    total: total,
+    payment: paymentMethod,
+    customer: {
+      name: custName.value,
+      address: custAddress.value,
+      phone: custPhone.value
+    },
+    date: new Date().toLocaleString()
+  };
+
+  orders.push(newOrder);
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  window.location.href = "success.html";
+}
+
+function openUPI(){
+  document.getElementById("upiPopup").style.display = "block";
+}
+
+function closeUPI(){
+  document.getElementById("upiPopup").style.display = "none";
+}
+
+function confirmUPI(){
+  alert("Payment Successful!");
+  saveOrder("UPI");
+}
+
+function clearCart(){
+  cart = [];
+  total = 0;
+
+  document.getElementById("cartList").innerHTML = "Cart is empty";
+  document.getElementById("totalPrice").innerText = 0;
+}
+
+function logout(){
+  localStorage.removeItem("user");
+  window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>
